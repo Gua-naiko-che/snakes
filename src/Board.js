@@ -15,11 +15,11 @@ function Board() {
 
   function renderRow(rowIndex) {
     const cells = indexes.map(colIndex => renderCell(rowIndex, colIndex));
-    return <tr>{cells}</tr>;
+    return <tr key={rowIndex}>{cells}</tr>;
   }
 
   function renderCell(rowIndex, colIndex) {
-    return <td className={getClass(rowIndex, colIndex)}></td>;
+    return <td className={getClass(rowIndex, colIndex)} key={colIndex}></td>;
   }
 
   function getClass(rowIndex, colIndex) {
