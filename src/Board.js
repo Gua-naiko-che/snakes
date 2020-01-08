@@ -1,4 +1,5 @@
 import React from 'react';
+import { isSamePoint } from "./geometry";
 import './Board.css';
 
 function Board({ size, snake, food }) {
@@ -33,10 +34,6 @@ function Board({ size, snake, food }) {
     } else {
       return "";
     }
-  }
-
-  function isSamePoint(p1, p2) {
-    return p1[0] === p2[0] && p1[1] === p2[1]
   }
 }
 

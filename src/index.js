@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './Board';
 import * as serviceWorker from './serviceWorker';
-import { getNewSnake } from './game';
+import { getNewSnake, isGameOver } from "./game";
 import { Direction } from './directions';
 
 const START_SNAKE = [
@@ -21,8 +21,11 @@ let snake = START_SNAKE;
 
 (function gameLoop() {
   snake = getNewSnake(snake, Direction.right);
-  ReactDOM.render(<Board size={BOARD_SIZE} snake={snake} food={food} />, document.getElementById('root'));
-  setTimeout(gameLoop, SNAKE_SPEED);
+  
+  if (!isGameOver(snake, BOARD_SIZE)) {
+    ReactDOM.render(<Board size={BOARD_SIZE} snake={snake} food={food} />, document.getElementById('root'));
+    setTimeout(gameLoop, SNAKE_SPEED);
+  }
 })();
 
 // If you want your app to work offline and load faster, you can change
