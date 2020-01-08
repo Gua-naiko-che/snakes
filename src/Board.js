@@ -1,7 +1,7 @@
 import React from 'react';
 import './Board.css';
 
-function Board({ size, snake }) {
+function Board({ size, snake, food }) {
   const indexes = [...Array(size).keys()];
 
   return (
@@ -22,8 +22,21 @@ function Board({ size, snake }) {
   }
 
   function getClass(rowIndex, colIndex) {
-    const isSnakeCell = snake.some(point => point[0] === rowIndex && point[1] === colIndex);
-    return isSnakeCell ? "snake" : "";
+    const currentCell = [rowIndex, colIndex];
+    const isSnakeCell = snake.some(point => isSamePoint(point, currentCell));
+    const isFoodCell = isSamePoint(food, currentCell)
+
+    if (isSnakeCell) {
+      return "snake";
+    } else if (isFoodCell) {
+      return "food";
+    } else {
+      return "";
+    }
+  }
+
+  function isSamePoint(p1, p2) {
+    return p1[0] === p2[0] && p1[1] === p2[1]
   }
 }
 

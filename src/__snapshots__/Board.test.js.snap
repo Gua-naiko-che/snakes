@@ -46,7 +46,7 @@ exports[`renders correctly 1`] = `
       className=""
     />
     <td
-      className=""
+      className="food"
     />
     <td
       className=""
