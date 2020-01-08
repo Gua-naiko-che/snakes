@@ -4,7 +4,17 @@ import './index.css';
 import Board from './Board';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Board />, document.getElementById('root'));
+const snake = [
+  [0, 0],
+  [0, 1],
+  [1, 1],
+  [1, 2],
+  [2, 2],
+];
+const food = [2, 2];
+const BOARD_SIZE = 10;
+
+ReactDOM.render(<Board size={BOARD_SIZE} snake={snake} food={food} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
