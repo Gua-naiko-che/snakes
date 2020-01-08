@@ -1,8 +1,7 @@
 import React from 'react';
 import './Board.css';
 
-function Board() {
-  const size = 5;
+function Board({ size }) {
   const indexes = [...Array(size).keys()];
 
   return (
