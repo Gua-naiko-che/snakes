@@ -6,26 +6,6 @@ exports[`renders correctly 1`] = `
 >
   <tr>
     <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-  </tr>
-  <tr>
-    <td
-      className="snake"
-    />
-    <td
       className=""
     />
     <td
@@ -35,32 +15,18 @@ exports[`renders correctly 1`] = `
       className=""
     />
     <td
-      className="snake"
-    />
-  </tr>
-  <tr>
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-    <td
-      className="snake"
-    />
-  </tr>
-  <tr>
-    <td
-      className="snake"
+      className=""
     />
     <td
       className=""
+    />
+  </tr>
+  <tr>
+    <td
+      className=""
+    />
+    <td
+      className="snake"
     />
     <td
       className="snake"
@@ -69,24 +35,58 @@ exports[`renders correctly 1`] = `
       className=""
     />
     <td
-      className="snake"
+      className=""
     />
   </tr>
   <tr>
     <td
-      className="snake"
+      className=""
     />
     <td
-      className="snake"
+      className=""
     />
     <td
-      className="snake"
+      className=""
     />
     <td
-      className="snake"
+      className=""
     />
     <td
-      className="snake"
+      className=""
+    />
+  </tr>
+  <tr>
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+  </tr>
+  <tr>
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
+    />
+    <td
+      className=""
     />
   </tr>
 </table>
