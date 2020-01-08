@@ -5,7 +5,7 @@ function Board({ size, snake, food }) {
   const indexes = [...Array(size).keys()];
 
   return (
-    <table className="board">{renderRows()}</table>
+    <table className="board"><tbody>{renderRows()}</tbody></table>
   );
 
   function renderRows() {
