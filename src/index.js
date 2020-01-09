@@ -4,26 +4,34 @@ import './index.css';
 import Board from './Board';
 import * as serviceWorker from './serviceWorker';
 import { getNewSnake, isGameOver } from "./game";
-import { Direction } from './directions';
+import { createStore } from "redux";
 
-const START_SNAKE = [
-  [0, 0],
-  [0, 1],
-  [1, 1],
-  [1, 2],
-  [2, 2],
-];
 const food = [3, 3];
 const BOARD_SIZE = 10;
 const SNAKE_SPEED = 150;
 
-let snake = START_SNAKE;
+const snakeApp = (state = {}, action) => {
+  return {
+    snake: getNewSnake(state.snake, action),
+  };
+}
+
+const store = createStore(snakeApp);
+store.subscribe(() => ReactDOM.render(
+  <Board size={BOARD_SIZE} snake={getSnakeFromStore()} food={food} />,
+  document.getElementById('root'))
+);
+
+const getSnakeFromStore = () => {
+  const state = store.getState();
+  console.log(state);
+  return state.snake.body;
+}
 
 (function gameLoop() {
-  snake = getNewSnake(snake, Direction.right);
-  
-  if (!isGameOver(snake, BOARD_SIZE)) {
-    ReactDOM.render(<Board size={BOARD_SIZE} snake={snake} food={food} />, document.getElementById('root'));
+  store.dispatch({ type: "MOVE" });
+
+  if (!isGameOver(getSnakeFromStore(), BOARD_SIZE)) {
     setTimeout(gameLoop, SNAKE_SPEED);
   }
 })();

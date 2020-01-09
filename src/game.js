@@ -1,8 +1,20 @@
 import { Direction } from "./directions";
 import { isPointInArray } from "./geometry";
 
-export function getNewSnake(snake, direction) {
-  const oldHead = snake[snake.length - 1];
+const START_SNAKE = [
+  [0, 0],
+  [0, 1],
+  [1, 1],
+  [1, 2],
+  [2, 2],
+];
+
+export function getNewSnake(snake = { body: START_SNAKE, direction: Direction.right }, action) {
+  if (action.type !== "MOVE") return snake;
+
+  const body = snake.body;
+  const direction = snake.direction;
+  const oldHead = body[body.length - 1];
 
   let newHead;
   if (direction === Direction.up) {
@@ -18,7 +30,7 @@ export function getNewSnake(snake, direction) {
     newHead = [oldHead[0], oldHead[1] + 1];
   }
 
-  return [...snake.slice(1), newHead];
+  return { ...snake, body: [...body.slice(1), newHead] };
 }
 
 export function isGameOver(snake, boardSize) {
