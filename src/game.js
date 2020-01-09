@@ -9,12 +9,20 @@ const START_SNAKE = [
   [2, 2],
 ];
 
-export function getNewSnake(snake = { body: START_SNAKE, direction: Direction.right }, action) {
-  if (action.type !== "MOVE") return snake;
+export function game(state = { snake: START_SNAKE, direction: Direction.right }, action) {
+  if (action.type === "UPDATE") {
+    return {
+      ...state,
+      snake: getNewSnake(state.snake, state.direction),
+      isOver: isGameOver(state.snake, state.boardSize)
+    };
+  }
 
-  const body = snake.body;
-  const direction = snake.direction;
-  const oldHead = body[body.length - 1];
+  return state;
+}
+
+function getNewSnake(snake, direction) {
+  const oldHead = snake[snake.length - 1];
 
   let newHead;
   if (direction === Direction.up) {
@@ -30,7 +38,7 @@ export function getNewSnake(snake = { body: START_SNAKE, direction: Direction.ri
     newHead = [oldHead[0], oldHead[1] + 1];
   }
 
-  return { ...snake, body: [...body.slice(1), newHead] };
+  return [...snake.slice(1), newHead];
 }
 
 export function isGameOver(snake, boardSize) {

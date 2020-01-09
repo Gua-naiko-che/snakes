@@ -3,33 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './Board';
 import * as serviceWorker from './serviceWorker';
-import { getNewSnake, isGameOver } from "./game";
+import { game, isGameOver } from "./game";
 import { createStore } from "redux";
 
 const food = [3, 3];
 const BOARD_SIZE = 10;
 const SNAKE_SPEED = 150;
 
-const snakeApp = (state = {}, action) => {
-  return {
-    snake: getNewSnake(state.snake, action),
-  };
-}
-
-const store = createStore(snakeApp);
+const store = createStore(game);
 store.subscribe(() => ReactDOM.render(
   <Board size={BOARD_SIZE} snake={getSnakeFromStore()} food={food} />,
   document.getElementById('root'))
 );
 
-const getSnakeFromStore = () => {
-  const state = store.getState();
-  console.log(state);
-  return state.snake.body;
-}
+const getSnakeFromStore = () => store.getState().snake;
 
 (function gameLoop() {
-  store.dispatch({ type: "MOVE" });
+  store.dispatch({ type: "UPDATE" });
 
   if (!isGameOver(getSnakeFromStore(), BOARD_SIZE)) {
     setTimeout(gameLoop, SNAKE_SPEED);
