@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './Board';
-import * as serviceWorker from './serviceWorker';
 import { game, isGameOver } from "./game";
 import { createStore } from "redux";
+import { directionByKeyCode } from "./directions";
 
 const food = [3, 3];
 const BOARD_SIZE = 10;
@@ -16,6 +16,15 @@ store.subscribe(() => ReactDOM.render(
   document.getElementById('root'))
 );
 
+document.onkeydown = e => {
+  e = e || window.event;
+  const nextDirection = directionByKeyCode[e.keyCode];
+  if (nextDirection) {
+    store.dispatch({ type: "SET_NEXT_DIRECTION", nextDirection })
+    e.preventDefault();
+  }
+}
+
 const getSnakeFromStore = () => store.getState().snake;
 
 (function gameLoop() {
@@ -25,8 +34,3 @@ const getSnakeFromStore = () => store.getState().snake;
     setTimeout(gameLoop, SNAKE_SPEED);
   }
 })();
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

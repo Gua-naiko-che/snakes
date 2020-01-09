@@ -67,3 +67,9 @@ it('game over against itself', () => {
   const newState = game(oldState, { type: "UPDATE" });
   expect(newState.isOver).toEqual(true);
 });
+
+it('next direction is different to current one: is is stored', () => {
+  const oldState = {};
+  const newState = game(oldState, { type: "SET_NEXT_DIRECTION", nextDirection: Direction.up });
+  expect(newState.nextDirection).toEqual(Direction.up);
+});

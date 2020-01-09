@@ -16,6 +16,9 @@ export function game(state = { snake: START_SNAKE, direction: Direction.right },
       snake: getNewSnake(state.snake, state.direction),
       isOver: isGameOver(state.snake, state.boardSize)
     };
+  } else if (action.type === "SET_NEXT_DIRECTION") {
+    console.log(action.nextDirection);
+    return { ...state, nextDirection: action.nextDirection };
   }
 
   return state;
