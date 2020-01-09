@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 it('renders correctly', () => {
   const snake = [[0, 1], [1, 1], [1, 2]];
   const tree = renderer
-    .create(<Board size={5} snake={snake} food={[2, 2]} />)
+    .create(<Board boardSize={5} snake={snake} food={[2, 2]} />)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

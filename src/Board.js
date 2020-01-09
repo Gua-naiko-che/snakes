@@ -2,8 +2,8 @@ import React from 'react';
 import { isSamePoint } from "./geometry";
 import './Board.css';
 
-function Board({ size, snake, food }) {
-  const indexes = [...Array(size).keys()];
+function Board({ boardSize, snake, food }) {
+  const indexes = [...Array(boardSize).keys()];
 
   return (
     <table className="board"><tbody>{renderRows()}</tbody></table>

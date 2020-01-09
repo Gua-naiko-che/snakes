@@ -1,5 +1,5 @@
 import { Direction } from "./directions";
-import { isPointInArray } from "./geometry";
+import { isPointInArray, isSamePoint } from "./geometry";
 
 const START_SNAKE = [
   [0, 0],
@@ -8,23 +8,39 @@ const START_SNAKE = [
   [1, 2],
   [2, 2],
 ];
+export const BOARD_SIZE = 10;
 
-export function game(state = { snake: START_SNAKE, direction: Direction.right }, action) {
+const defaultGame = {
+  snake: START_SNAKE,
+  direction: Direction.right,
+  nextDirection: null,
+  food: getRandomFood(BOARD_SIZE, START_SNAKE),
+  boardSize: BOARD_SIZE,
+  isOver: false,
+};
+
+export function game(state = defaultGame, action) {
   if (action.type === "UPDATE") {
+    const newDirection = getNewDirection(state.nextDirection, state.direction);
+    const newSnake = getNewSnake(state.snake, newDirection, state.food);
+    const isOver = isGameOver(newSnake, state.boardSize);
+
     return {
       ...state,
-      snake: getNewSnake(state.snake, state.direction),
-      isOver: isGameOver(state.snake, state.boardSize)
+      snake: isOver ? state.snake : newSnake,
+      isOver: isOver,
+      direction: newDirection,
+      nextDirection: null,
+      food: isPointInArray(state.food, newSnake) ? getRandomFood(state.boardSize, newSnake) : state.food
     };
   } else if (action.type === "SET_NEXT_DIRECTION") {
-    console.log(action.nextDirection);
     return { ...state, nextDirection: action.nextDirection };
   }
 
   return state;
 }
 
-function getNewSnake(snake, direction) {
+function getNewSnake(snake, direction, food) {
   const oldHead = snake[snake.length - 1];
 
   let newHead;
@@ -41,7 +57,21 @@ function getNewSnake(snake, direction) {
     newHead = [oldHead[0], oldHead[1] + 1];
   }
 
-  return [...snake.slice(1), newHead];
+  const hasEaten = isSamePoint(food, newHead);
+
+  return [...snake.slice(hasEaten ? 0 : 1), newHead];
+}
+
+function getNewDirection(nextDirection, oldDirection) {
+  if (!nextDirection) return oldDirection;
+
+  const isOpositeDirection =
+    (nextDirection === Direction.up && oldDirection === Direction.down)
+    || (nextDirection === Direction.down && oldDirection === Direction.up)
+    || (nextDirection === Direction.left && oldDirection === Direction.right)
+    || (nextDirection === Direction.right && oldDirection === Direction.left);
+
+  return isOpositeDirection ? oldDirection : nextDirection;
 }
 
 export function isGameOver(snake, boardSize) {
@@ -52,4 +82,12 @@ export function isGameOver(snake, boardSize) {
     || head[0] > boardSize - 1
     || head[1] > boardSize - 1
     || isPointInArray(head, snake.slice(0, -1));
+}
+
+function getRandomFood(boardSize, snake) {
+  const food = [Math.floor(Math.random() * boardSize), Math.floor(Math.random() * boardSize)];
+
+  return isPointInArray(food, snake)
+    ? getRandomFood(boardSize, snake)
+    : food;
 }
